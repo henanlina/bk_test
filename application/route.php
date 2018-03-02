@@ -13,18 +13,31 @@
    return 'hello world!';
 });*/
 
-\think\Route::resource('blog','index/Blog');
-\think\Route::resource('tag','admin/Tag');
-\think\Route::any('admin/list','admin/Article/ArticleList');
-\think\Route::get('admin/detail/:id','admin/Article/detail');
-\think\Route::post('admin/add','admin/Article/addContent');
-\think\Route::post('admin/update','admin/Article/updateContent');
-\think\Route::post('login','admin/Login/login');//登录
-\think\Route::post('login_info','admin/User/userLoginInfo');//获取登录信息
+//\think\Route::resource('blog','index/Blog');
+//\think\Route::resource('tag','admin/Tag');
+/*\think\Route::any('admin/list','admin/Article/ArticleList');
+\think\Route::get('admin/detail/:id','admin/Article/detail');*/
+/*\think\Route::post('admin/add','admin/Article/addContent');
+\think\Route::post('admin/update','admin/Article/updateContent');*/
+/*\think\Route::post('login','admin/Login/loginByPassword');//登录
+\think\Route::post('login_info','admin/User/userLoginInfo');//获取登录信息*/
 
 return [
     '__pattern__' => [
         'name' => '\w+','json'=>'\w+'
+    ],
+    '[bk]'=>[
+        'articles'=>['admin/Article/ArticleList',['method'=>'get']],//文章列表
+        'detail/:id'=>['admin/Article/detail',['method'=>'get']],//文章详情
+    ],
+    '[user]'=>[
+        'add'=>['admin/Article/addContent',['method'=>'post']],//新文章发布
+        'update'=>['admin/Article/updateContent',['method'=>'post']],//更新文章内容
+        'login'=>['admin/Login/loginByPassword',['method'=>'post']],//登录
+        'user_info'=>['admin/User/userLoginInfo',['method'=>'post']],//获取登录信息
+    ],
+    '__rest__'=>[
+        'tag'=>'admin/Tag'
     ],
     '[hello]'     => [
         ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+'],'cache'=>3600],
